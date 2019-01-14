@@ -1,0 +1,13 @@
+define CharList as text
+define curChar as number
+define curChar2 as number
+define chr as text
+set text of CharList to Hello
+set number of curChar to 0
+run this while %var(curChar) < %len(CharList)
+	set text of chr to %var(CharList)
+	set number of curChar2 to %var(curChar) + 1
+	trim chr %var(curChar) %var(curChar2)
+	println %var(chr)
+	set number of curChar to %var(curChar) + 1
+stop running

@@ -1,0 +1,13 @@
+define bottles as number
+set number of bottles to 99
+run this while %var(bottles) > 1
+	println %var(bottles) bottles of beer on the wall, %var(bottles) bottles of beer.
+	set number of bottles to %var(bottles) - 1
+	println Take one down and pass it around, %var(bottles) bottles of beer on the wall.
+	print \n
+stop running
+println %var(bottles) bottle of beer on the wall, %var(bottles) bottle of beer.
+println Take one down and pass it around, no more bottles of beer on the wall.
+print \n
+println No more bottles of beer on the wall, no more bottles of beer. 
+println Go to the store and buy some more, 99 bottles of beer on the wall.

@@ -1,0 +1,130 @@
+define CharList as text
+define curChar as number
+define curChar2 as number
+define chr as text
+define curCell as number
+define read as number
+define bracesEn as number
+define checkMemCell as text
+define memVar as text
+set number of read to 1
+check if argv1 not exists then run
+	print Enter Code: 
+	get input and save it as text into CharList
+end statement
+check if argv1 exists then run
+	set text of CharList to %var(argv1)
+end statement
+
+run this while %var(curChar) < %len(CharList)
+	
+	set text of chr to %var(CharList)
+	set number of curChar2 to %var(curChar) + 1
+	trim chr %var(curChar) %var(curChar2)
+	
+	set text of checkMemCell to Memory_
+	combine checkMemCell %var(curCell)
+	check if %var(checkMemCell) not exists then run
+		define %var(checkMemCell) as number
+	end statement
+	set text of memVar to %var(checkMemCell)
+	check if %var(chr) == + then run
+		check if %var(read) == 1 then run
+			set number of %var(checkMemCell) to %var(%var(memVar)) + 1
+			check if %var(%var(memVar)) > 255 then run
+				set number of %var(memVar) to 0
+			end statement
+		end statement
+	end statement
+
+	check if %var(chr) == - then run
+		check if %var(read) == 1 then run
+			set number of %var(checkMemCell) to %var(%var(memVar)) - 1
+			check if %var(%var(memVar)) < 0 then run
+				set number of %var(memVar) to 255
+			end statement
+		end statement
+	end statement
+
+	check if %var(chr) == > then run
+		check if %var(read) == 1 then run
+			set number of curCell to %var(curCell) + 1
+		end statement
+	end statement
+
+	check if %var(chr) == < then run
+		check if %var(read) == 1 then run
+			set number of curCell to %var(curCell) - 1
+		end statement
+	end statement
+
+	check if %var(chr) == . then run
+		check if %var(read) == 1 then run
+			define charPrint as number
+			set number of charPrint to %var(%var(memVar))
+			print %chr(charPrint)
+		end statement
+	end statement
+
+	check if %var(chr) == , then run
+		check if %var(read) == 1 then run
+			define bfInput as number
+			get input and save it as number into bfInput
+			set number of %var(memVar) to %var(bfInput)
+		end statement
+	end statement
+
+	check if %var(chr) == [ then run
+		check if %var(read) == 0 then run
+			set number of bracesEn to %var(bracesEn) + 1
+		end statement
+		check if %var(read) == 1 then run
+			check if %var(%var(memVar)) == 0 then run
+				set number of read to 0
+				define openBrace as number
+				set number of openBrace to %var(curChar)
+			end statement
+		end statement
+		
+	end statement
+
+	check if %var(chr) == ] then run
+		check if %var(read) == 1 then run
+			define bracesEn2 as number
+			define curCharBack as number
+			define curCharBack2 as number
+			set number of bracesEn2 to 1
+			set number of curCharBack to %var(curChar) - 1
+			set number of curCharBack2 to %var(curChar2) - 1
+			run this while %var(bracesEn2) > 0
+				define chr2 as text
+				set text of chr2 to %var(CharList)
+				trim chr2 %var(curCharBack) %var(curCharBack2)
+
+				check if %var(chr2) == ] then run
+					set number of bracesEn2 to %var(bracesEn2) + 1
+				end statement
+				check if %var(chr2) == [ then run
+					set number of bracesEn2 to %var(bracesEn2) - 1
+				end statement			
+
+				set number of curCharBack to %var(curCharBack) - 1
+				set number of curCharBack2 to %var(curCharBack2) - 1
+			stop running
+			set number of curChar to %var(curCharBack)
+		end statement
+		check if %var(read) == 0 then run
+			check if %var(bracesEn) == 0 then run
+				set number of read to 1
+				check if %var(%var(memVar)) > 0 then run
+					set number of curChar to %var(openBrace)
+				end statement
+			end statement
+			check if %var(bracesEn) > 0 then run
+				set number of bracesEn to %var(bracesEn) - 1
+			end statement
+		end statement
+	end statement
+	set number of curChar to %var(curChar) + 1
+
+stop running
