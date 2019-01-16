@@ -1,6 +1,15 @@
 
 import sys
+from random import randint
 
+
+def checkExpressions(line, vars):
+	args = line.split(" ")
+	for pos, arg in enumerate(args):
+		if arg.startswith("%var"):
+			args[pos] = str(vars[arg[5:-1]])
+
+	return args
 
 
 def checkIf(val1, val2, operator):
@@ -147,6 +156,9 @@ def runCode(code, positions, vars2):
 				args.pop(0)
 				args.pop(0)
 				vars[varT] = vars[varT] + str(' '.join(args)).replace('\n', '')
+
+		if all(elem in args  for elem in ['generate', 'random', 'between']):
+			vars[args[10]] = str(randint(int(args[3]), int(args[5])))
 
 		#print(vars)
 		curLine +=1
